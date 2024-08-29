@@ -39,7 +39,8 @@ All configurations for running the SoluBat model are managed through the config.
 
 ## Usage
 
-```
+```shell
+python SoluTrain.py
 ```
 
 ## Contributing
