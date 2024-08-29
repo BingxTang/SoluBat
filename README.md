@@ -9,6 +9,8 @@ SoluBat is a sophisticated hybrid model designed for precise protein solubility 
 
 ### Paper Results
 
+![4c096e7a53bf774c0443041b6c281043](https://github.com/user-attachments/assets/667d45bb-63bc-4385-af0b-a77beea2ed0f)
+
 
 ## 🛫 Requirement
 
