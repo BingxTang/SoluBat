@@ -9,7 +9,7 @@
 
 ### Paper Results
 
-![46a99265f23a0315932960f75bf9b3bf](https://github.com/user-attachments/assets/096a94ad-ea6a-4aef-b1d2-acc37bf8d397)
+![total table](https://github.com/user-attachments/assets/95275cbc-9b79-4e2c-b1b3-534649594bb5)
 
 ## Features
 
