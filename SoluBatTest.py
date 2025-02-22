@@ -7,6 +7,7 @@ import config as fig
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_auc_score, average_precision_score, confusion_matrix
 import numpy as np
 
+
 def compute_metrics(all_targets, all_predictions):
     accuracy = accuracy_score(all_targets, all_predictions)
     precision = precision_score(all_targets, all_predictions, average='macro')
@@ -16,7 +17,7 @@ def compute_metrics(all_targets, all_predictions):
     try:
         auc = roc_auc_score(all_targets, all_predictions, multi_class='ovo')
     except ValueError:
-        auc = float('nan')  # Prevent error when only one class is present in the samples
+        auc = float('nan')  # Prevent error when only one class is present in the sample
     try:
         auprc = average_precision_score(all_targets, all_predictions, average='macro')
     except ValueError:
@@ -30,6 +31,7 @@ def compute_metrics(all_targets, all_predictions):
     tn = cm.sum() - (tp + fp + fn)  # True Negatives
 
     return accuracy, precision, recall, f1, mcc, auc, auprc, tp, tn, fp, fn
+
 
 def evaluate_model(model, data_loader, criterion, device):
     model.eval()
@@ -57,9 +59,10 @@ def evaluate_model(model, data_loader, criterion, device):
             all_predictions.extend(predicted.tolist())
 
     avg_loss = total_loss / len(data_loader)
-    metrics = compute_metrics(all_targets, all_predictions)
 
-    return avg_loss, metrics
+
+    return avg_loss, all_targets, all_predictions
+
 
 def main():
     model_fig = fig.Config("config.ini")
@@ -67,7 +70,7 @@ def main():
 
     print("Using device:", device)
 
-    # Define model architecture
+    # Define model structure
     model = models.SoluBat(
         mam_d_model=model_fig.mam_d_model,
         mam_n_layer=model_fig.mam_n_layer,
@@ -101,9 +104,10 @@ def main():
     # Define loss function
     criterion = nn.CrossEntropyLoss()
 
-    # Evaluate model
-    test_loss, metrics = evaluate_model(model, test_loader, criterion, device)
-    test_accuracy, test_precision, test_recall, test_f1, test_mcc, test_auc, test_auprc, tp, tn, fp, fn = metrics
+    # Evaluate the model
+    test_loss, all_targets, all_predictions = evaluate_model(model, test_loader, criterion, device)
+    test_accuracy, test_precision, test_recall, test_f1, test_mcc, test_auc, test_auprc, tp, tn, fp, fn = compute_metrics(all_targets, all_predictions)
+
 
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_accuracy:.4f}")
@@ -117,6 +121,7 @@ def main():
     # Display TP, TN, FP, FN for each class
     for i in range(len(tp)):
         print(f"Class {i}: TP={tp[i]}, TN={tn[i]}, FP={fp[i]}, FN={fn[i]}")
+
 
 if __name__ == "__main__":
     main()

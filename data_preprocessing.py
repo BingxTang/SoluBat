@@ -10,7 +10,6 @@ import shutil
 from datetime import datetime
 import h5py
 
-
 import torch
 from torch.utils.data import Dataset
 
@@ -37,8 +36,8 @@ class CombinedDataset(Dataset):
         seq_indices = [self.vocab[char] for char in sequence]
         seq_tensor = torch.tensor(seq_indices, dtype=torch.long)
 
-        # Adjust the shape of PSSM data
-        pssm_tensor = torch.tensor(pssm, dtype=torch.float32).permute(1, 0)  # Adjust to (num_features, length)
+        # Adjust PSSM data shape
+        pssm_tensor = torch.tensor(pssm, dtype=torch.float32).permute(1, 0)  # Reshape to (num_features, length)
         label_tensor = torch.tensor(label, dtype=torch.long)
 
         return seq_tensor, pssm_tensor, label_tensor
@@ -66,7 +65,7 @@ def collate_fn(batch):
     # Pad sequences
     sequences_padded = rnn_utils.pad_sequence(sequences, batch_first=True, padding_value=0)
 
-    # Find the maximum length in PSSM features
+    # Find the maximum length of PSSM features
     max_pssm_length = max([pssm.shape[1] for pssm in pssms])
     num_features = pssms[0].shape[0]
 
@@ -78,7 +77,7 @@ def collate_fn(batch):
         pssms_padded.append(pssm_padded)
 
     pssms_stacked = torch.stack(pssms_padded, dim=0)
-    pssms_stacked = pssms_stacked.permute(0, 2, 1)  # Adjust shape to (batch_size, length, num_features) -> (batch_size, num_features, length)
+    pssms_stacked = pssms_stacked.permute(0, 2, 1)  # Reshape to (batch_size, length, num_features) -> (batch_size, num_features, length)
 
     # Stack all label tensors together
     labels_stacked = torch.tensor(labels, dtype=torch.long)
@@ -86,7 +85,7 @@ def collate_fn(batch):
     return sequences_padded, pssms_stacked, labels_stacked
 
 
-# Resume training from checkpoints
+# Resume training from checkpoint
 def get_latest_checkpoint(checkpoints_dir):
     # Find all checkpoint files in the directory
     checkpoint_files = [f for f in os.listdir(checkpoints_dir) if re.search(r'model_epoch_(\d+)', f)]
@@ -94,7 +93,7 @@ def get_latest_checkpoint(checkpoints_dir):
     if not checkpoint_files:
         return None  # Return None if no checkpoint files are found
 
-    # Extract epoch number from filenames using regular expression
+    # Extract epoch number from filenames using regex
     checkpoint_files.sort(key=lambda f: int(re.search(r'model_epoch_(\d+)', f).group(1)))
 
     # Return the full path of the latest checkpoint file
@@ -109,7 +108,7 @@ def package_checkpoints():
     checkpoint_dir = model_fig.Checkpoints
     result_folder = model_fig.ResultFolder
 
-    # Create a new result directory, name includes date timestamp
+    # Create a new result directory with a timestamp in its name
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     new_result_dir = os.path.join(result_folder, f"checkpoints_{timestamp}")
 
