@@ -3,13 +3,14 @@
 ## Introduction (SoluBat)
 **SoluBat** is a sophisticated hybrid model designed for precise protein solubility prediction, incorporating the **Mamba model**.
 
-![Model](https://github.com/user-attachments/assets/d7819607-3f5b-49d5-99bf-adba19b3eb9b)
+![Figure 1](https://github.com/user-attachments/assets/9478ca65-461c-4352-ae94-4ae9a794bf2f)
+
 
 ## Results
 
 ### Paper Results
 
-![total table](https://github.com/user-attachments/assets/95275cbc-9b79-4e2c-b1b3-534649594bb5)
+
 
 ## Features
 
