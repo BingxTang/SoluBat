@@ -20,8 +20,8 @@ default_config: Dict[str, Any] = {
     "test_dir":       "src/data/Data/Datasets/NetSolP/test",
 
     # Cross-validation
-    "num_folds":      7,
-    "fold_idx":       6,
+    "num_folds":      5,
+    "fold_idx":       1,
     "train_flow":     "single",
     "run_name":       "exp",
 

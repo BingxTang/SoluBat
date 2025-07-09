@@ -79,7 +79,7 @@ def _normalize_pssm(pssm):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Cross-/Single-Fold Trainer & Evaluator")
     parser.add_argument("--cfg-file", type=str, default=None, help="Path to JSON/YAML config file")
-    parser.add_argument("--fold-idx", type=int, default=6, help="Fold index: -1=all folds; others specify a single fold")
+    parser.add_argument("--fold-idx", type=int, default=-1, help="Fold index: -1=all folds; others specify a single fold")
     args, unknown = parser.parse_known_args()
 
     # load configuration
