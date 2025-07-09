@@ -10,14 +10,16 @@
 
 ### Paper Results
 
+![ee6be48ea487bb6261b1d97ae4747907](https://github.com/user-attachments/assets/cf9b75eb-4355-431d-9708-6f43f6814d4b)
 
 
 ## Features
 
-- **Bidirectional Mamba Model**: Integrates the strengths of RNN and CNN, ensuring efficient capture and utilization of protein sequence information.
-- **Multi-Head Attention Mechanism**: Enhances model expressiveness and improves prediction accuracy.
-- **Automatic PSSM Generation**: No need for manual PSSM generation; the model handles it automatically.
-- **High Accuracy**: Demonstrates superior performance on multiple benchmark datasets, surpassing existing state-of-the-art models.
+- Bidirectional Mamba model boosts accuracy in protein solubility prediction.
+- Dynamic gating integrates multimodal features with high efficiency.
+- Near-linear complexity reduces GPU usage compared to Transformers.
+- Built-in residue-level attribution enhances biological interpretability.
+- Extensive benchmarking confirms strong generalization and industrial applicability.
 
 ## Requirement
 
